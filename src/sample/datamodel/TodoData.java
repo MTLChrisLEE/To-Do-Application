@@ -90,4 +90,8 @@ public class TodoData {
 
     }
 
+    public void addTodoItem(TodoItem item){
+            todoItems.add(item);
+    }
+
 }

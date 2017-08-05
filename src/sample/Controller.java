@@ -3,17 +3,15 @@ package sample;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TextArea;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import sample.datamodel.TodoData;
 import sample.datamodel.TodoItem;
 
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 public class Controller {
     private List<TodoItem> todoItems;
@@ -27,16 +25,10 @@ public class Controller {
     @FXML
     private Label deadlineLabel;
 
-    public void initialize(){
-//        TodoItem item1=new TodoItem("This is ToDoApplication","Please enjoy", LocalDate.of(2017, Month.AUGUST,04));
-//        TodoItem item2=new TodoItem("First JavaFX","----", LocalDate.of(2017,Month.AUGUST,04));
-//
-//        todoItems = new ArrayList<TodoItem>();
-//        todoItems.add(item1);
-//        todoItems.add(item2);
-//
-//        TodoData.getInstance().setTodoItems(todoItems);
+    @FXML
+    private BorderPane mainBorderPane;
 
+    public void initialize(){
         todoListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TodoItem>() {
             @Override
             public void changed(ObservableValue<? extends TodoItem> observable, TodoItem oldValue, TodoItem newValue) {
@@ -53,6 +45,38 @@ public class Controller {
         //Can only select one item at a time
         todoListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         todoListView.getSelectionModel().selectFirst();
+    }
+
+
+
+    //Method showing a dialogpane to add an item
+    @FXML
+    public void showNewItemDialog(){
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.initOwner(mainBorderPane.getScene().getWindow());
+        FXMLLoader fxmlLoader =  new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("todoItemDialog.fxml"));
+        try{
+
+            dialog.getDialogPane().setContent(fxmlLoader.load());
+
+        }catch(IOException e){
+            System.out.println("ERROR");
+            e.printStackTrace();
+            return;
+        }
+
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+
+        Optional<ButtonType> result = dialog.showAndWait();
+        if(result.isPresent() && result.get() == ButtonType.OK){
+            DialogController controller =fxmlLoader.getController();
+            System.out.println("OK pressed");
+        }else{
+            System.out.println("Cancel");
+        }
+
     }
 
     @FXML
