@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
+import sample.datamodel.TodoData;
 import sample.datamodel.TodoItem;
 
 import java.time.LocalDate;
@@ -27,12 +28,14 @@ public class Controller {
     private Label deadlineLabel;
 
     public void initialize(){
-        TodoItem item1=new TodoItem("This is ToDoApplication","Please enjoy", LocalDate.of(2017, Month.AUGUST,04));
-        TodoItem item2=new TodoItem("First JavaFX","----", LocalDate.of(2017,Month.AUGUST,04));
-
-        todoItems = new ArrayList<TodoItem>();
-        todoItems.add(item1);
-        todoItems.add(item2);
+//        TodoItem item1=new TodoItem("This is ToDoApplication","Please enjoy", LocalDate.of(2017, Month.AUGUST,04));
+//        TodoItem item2=new TodoItem("First JavaFX","----", LocalDate.of(2017,Month.AUGUST,04));
+//
+//        todoItems = new ArrayList<TodoItem>();
+//        todoItems.add(item1);
+//        todoItems.add(item2);
+//
+//        TodoData.getInstance().setTodoItems(todoItems);
 
         todoListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TodoItem>() {
             @Override
@@ -45,7 +48,7 @@ public class Controller {
             }
         });
 
-        todoListView.getItems().setAll(todoItems);
+        todoListView.getItems().setAll(TodoData.getInstance().getTodoItems());
 
         //Can only select one item at a time
         todoListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
