@@ -91,4 +91,8 @@ public class TodoData {
             todoItems.add(item);
     }
 
+    public void deleteTdoItem(TodoItem item){
+        todoItems.remove(item);
+    }
+
 }
