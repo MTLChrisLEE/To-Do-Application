@@ -40,7 +40,7 @@ public class Controller {
             }
         });
 
-        todoListView.getItems().setAll(TodoData.getInstance().getTodoItems());
+        todoListView.setItems(TodoData.getInstance().getTodoItems());
 
         //Can only select one item at a time
         todoListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -71,16 +71,11 @@ public class Controller {
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
 
         Optional<ButtonType> result = dialog.showAndWait();
-        if(result.isPresent() && result.get() == ButtonType.OK){
-            DialogController controller =fxmlLoader.getController();
-            TodoItem newItem= controller.processResults();
-            todoListView.getItems().setAll(TodoData.getInstance().getTodoItems());
+        if(result.isPresent() && result.get() == ButtonType.OK) {
+            DialogController controller = fxmlLoader.getController();
+            TodoItem newItem = controller.processResults();
             todoListView.getSelectionModel().select(newItem);
-            System.out.println("OK pressed");
-        }else{
-            System.out.println("Cancel");
         }
-
     }
 
     @FXML
