@@ -14,6 +14,8 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.Tooltip?>
 <BorderPane fx:id="mainBorderPane" fx:controller="sample.Controller" xmlns:fx="http://javafx.com/fxml">
     <top>
         <VBox>
@@ -22,14 +24,16 @@
                     <items>
                         <MenuItem text="New" onAction="#showNewItemDialog"></MenuItem>
                         <SeparatorMenuItem/>
-                        <MenuItem text="Exit"/>
+                        <MenuItem text="Exit" onAction="#handleExit"/>
                     </items>
                 </Menu>
             </MenuBar>
             <ToolBar>
-                <HBox>
-                    <Button></Button>
-                </HBox>
+                <ToggleButton fx:id="filterToggleButton" text="Today's task" onAction="#handleFilterButton">
+                    <tooltip>
+                        <Tooltip text="Button Down: Show today's item only. Button Up:Show all items"/>
+                    </tooltip>
+                </ToggleButton>
             </ToolBar>
         </VBox>
     </top>
